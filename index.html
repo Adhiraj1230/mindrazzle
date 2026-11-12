@@ -1,1 +1,655 @@
-# mindrazzle
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#090817">
+<title>Mindrazzle — A Little Challenge. A Sharper Mind.</title>
+<meta name="description" content="One little challenge every day. Test your logic, sharpen your mind, and share your results with Mindrazzle.">
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg: #090817;
+  --panel: rgba(24, 22, 49, .78);
+  --text: #f8f7ff;
+  --muted: #a5a2bd;
+  --purple: #a78bfa;
+  --pink: #f472b6;
+  --blue: #60a5fa;
+  --cyan: #67e8f9;
+  --line: rgba(255,255,255,.10);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  background:
+    radial-gradient(ellipse at 15% 10%, rgba(124,58,237,.20), transparent 38%),
+    radial-gradient(ellipse at 85% 20%, rgba(14,165,233,.15), transparent 35%),
+    radial-gradient(ellipse at 50% 100%, rgba(236,72,153,.12), transparent 40%),
+    var(--bg);
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: .15;
+  background-image: radial-gradient(#fff 1px, transparent 1px);
+  background-size: 38px 38px;
+  mask-image: linear-gradient(to bottom, black, transparent 85%);
+}
+
+* { scrollbar-width: thin; }
+
+.container {
+  width: min(1100px, calc(100% - 36px));
+  margin: auto;
+  position: relative;
+}
+
+nav {
+  height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: -.8px;
+}
+
+.logo-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #8b5cf6, #ec4899);
+  box-shadow: 0 0 24px rgba(168,85,247,.45);
+  font-size: 20px;
+}
+
+.logo span {
+  background: linear-gradient(90deg, #c4b5fd, #67e8f9);
+  color: transparent;
+  background-clip: text;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.streak {
+  padding: 9px 14px;
+  border: 1px solid rgba(251,191,36,.25);
+  background: rgba(251,191,36,.08);
+  border-radius: 30px;
+  color: #fcd34d;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.hero {
+  text-align: center;
+  padding: 67px 0 35px;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--cyan);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.live-dot {
+  height: 7px;
+  width: 7px;
+  border-radius: 50%;
+  background: #34d399;
+  box-shadow: 0 0 12px #34d399;
+}
+
+h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(43px, 7vw, 75px);
+  line-height: 1.04;
+  letter-spacing: -4px;
+  margin: 20px 0 15px;
+}
+
+.gradient-text {
+  background: linear-gradient(100deg, #c4b5fd 10%, #f0abfc 48%, #67e8f9 90%);
+  color: transparent;
+  background-clip: text;
+}
+
+.hero p {
+  color: var(--muted);
+  font-size: 16px;
+  line-height: 1.7;
+  margin: auto;
+  max-width: 480px;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 270px;
+  gap: 22px;
+  align-items: start;
+  margin: 25px 0 70px;
+}
+
+.card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  backdrop-filter: blur(18px);
+  box-shadow: 0 18px 65px rgba(0,0,0,.23);
+}
+
+.puzzle-card {
+  padding: 31px;
+  position: relative;
+  overflow: hidden;
+}
+
+.puzzle-card::before {
+  content: "";
+  position: absolute;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  right: -160px;
+  top: -180px;
+  background: #8b5cf6;
+  filter: blur(110px);
+  opacity: .2;
+  pointer-events: none;
+}
+
+.puzzle-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 9px 13px;
+  border-radius: 30px;
+  background: rgba(167,139,250,.13);
+  border: 1px solid rgba(167,139,250,.25);
+  color: #c4b5fd;
+}
+
+.puzzle-number {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.puzzle-heading {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 29px;
+  margin: 29px 0 12px;
+  letter-spacing: -.8px;
+}
+
+.puzzle-question {
+  font-size: 17px;
+  line-height: 1.85;
+  color: #dedbf0;
+  min-height: 100px;
+  max-width: 640px;
+}
+
+.input-label {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 600;
+  margin: 27px 0 10px;
+}
+
+.answer-input {
+  width: 100%;
+  padding: 17px 18px;
+  border-radius: 13px;
+  outline: none;
+  border: 1px solid rgba(167,139,250,.28);
+  background: rgba(8,7,24,.72);
+  color: white;
+  font-size: 16px;
+  font-family: inherit;
+  transition: .2s;
+}
+
+.answer-input:focus {
+  border-color: var(--purple);
+  box-shadow: 0 0 0 3px rgba(167,139,250,.13), 0 0 22px rgba(139,92,246,.14);
+}
+
+.answer-input:disabled {
+  opacity: .65;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  transition: .2s ease;
+}
+
+.primary-btn {
+  flex: 1;
+  padding: 16px;
+  border: 0;
+  border-radius: 13px;
+  color: #100c20;
+  font-size: 14px;
+  font-weight: 800;
+  background: linear-gradient(100deg, #c4b5fd, #f0abfc 55%, #67e8f9);
+  box-shadow: 0 5px 25px rgba(167,139,250,.19);
+}
+
+.primary-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(167,139,250,.32);
+}
+
+.primary-btn:disabled {
+  cursor: not-allowed;
+  opacity: .5;
+  transform: none;
+}
+
+.secondary-btn {
+  padding: 15px 19px;
+  color: #dedbf0;
+  background: rgba(255,255,255,.05);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.secondary-btn:hover { background: rgba(255,255,255,.1); }
+
+.feedback {
+  display: none;
+  margin-top: 20px;
+  padding: 18px;
+  border-radius: 15px;
+  background: rgba(52,211,153,.08);
+  border: 1px solid rgba(52,211,153,.24);
+  animation: appear .35s ease;
+}
+
+.feedback.wrong {
+  background: rgba(251,146,60,.08);
+  border-color: rgba(251,146,60,.25);
+}
+
+.feedback h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.feedback p {
+  margin: 0;
+  color: #c9c6dc;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+@keyframes appear {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.side {
+  display: grid;
+  gap: 17px;
+}
+
+.side-card { padding: 23px; }
+
+.side-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 17px;
+  margin: 0 0 13px;
+}
+
+.side-copy {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+}
+
+.stat:last-child { border: 0; padding-bottom: 0; }
+.stat span { color: var(--muted); }
+.stat strong { color: #e9d5ff; }
+
+.mini-glow {
+  height: 4px;
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 17px;
+  background: linear-gradient(90deg, #8b5cf6, #ec4899, #67e8f9);
+  box-shadow: 0 0 15px rgba(167,139,250,.4);
+}
+
+footer {
+  border-top: 1px solid var(--line);
+  padding: 25px 0 35px;
+  color: #77748f;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+footer strong { color: #c4b5fd; }
+
+@media (max-width: 760px) {
+  .content { grid-template-columns: 1fr; }
+  .side { grid-template-columns: 1fr 1fr; }
+  .hero { padding-top: 52px; }
+  h1 { letter-spacing: -2px; }
+}
+
+@media (max-width: 500px) {
+  .container { width: min(100% - 26px, 1100px); }
+  nav { height: 70px; }
+  .logo { font-size: 20px; }
+  .streak { font-size: 11px; padding: 8px 10px; }
+  .hero { padding: 45px 0 24px; }
+  .hero p { font-size: 14px; }
+  .puzzle-card { padding: 21px; border-radius: 19px; }
+  .puzzle-heading { font-size: 25px; }
+  .puzzle-question { font-size: 15px; }
+  .actions { flex-direction: column; }
+  .secondary-btn { padding: 14px; }
+  .side { grid-template-columns: 1fr; }
+  footer { flex-direction: column; }
+}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<nav>
+  <div class="logo">
+    <div class="logo-icon">✦</div>
+    <span>Mindrazzle</span>
+  </div>
+  <div class="nav-right">
+    <div class="streak">🔥 <span id="streak">0</span> day streak</div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow"><span class="live-dot"></span> YOUR DAILY BRAIN CHALLENGE</div>
+  <h1>A little challenge.<br><span class="gradient-text">A sharper mind.</span></h1>
+  <p>Take a moment. Think differently. Give your brain something fun to solve.</p>
+</header>
+
+<main class="content">
+
+<section class="card puzzle-card">
+  <div class="puzzle-top">
+    <span class="tag" id="theme">Loading theme...</span>
+    <span class="puzzle-number" id="puzzleNumber">DAILY PUZZLE</span>
+  </div>
+
+  <h2 class="puzzle-heading">Today's Mindrazzle</h2>
+  <div class="puzzle-question" id="question">Loading your daily challenge...</div>
+
+  <label class="input-label" for="answer">YOUR ANSWER</label>
+  <input
+    class="answer-input"
+    id="answer"
+    type="text"
+    placeholder="Type your answer here..."
+    autocomplete="off"
+  >
+
+  <div class="actions">
+    <button class="primary-btn" id="submitBtn" onclick="checkAnswer()">Check my answer →</button>
+    <button class="secondary-btn" onclick="shareResult()">↗ Share</button>
+  </div>
+
+  <div class="feedback" id="feedback">
+    <h3 id="feedbackTitle"></h3>
+    <p id="feedbackText"></p>
+  </div>
+</section>
+
+<aside class="side">
+  <div class="card side-card">
+    <h3 class="side-title">Your daily habit ✨</h3>
+    <p class="side-copy">One puzzle a day. A small challenge that keeps your mind active.</p>
+    <div class="mini-glow"></div>
+  </div>
+
+  <div class="card side-card">
+    <h3 class="side-title">Your progress</h3>
+    <div class="stat"><span>🔥 Current streak</span><strong id="sideStreak">0 days</strong></div>
+    <div class="stat"><span>🧩 Solved</span><strong id="solved">0</strong></div>
+    <div class="stat"><span>📅 Today's puzzle</span><strong id="dayCount">Day 1</strong></div>
+  </div>
+
+  <div class="card side-card">
+    <h3 class="side-title">How it works</h3>
+    <p class="side-copy">Everyone gets the same daily challenge. Solve it, learn something new, and come back tomorrow for another.</p>
+  </div>
+</aside>
+
+</main>
+
+<footer>
+  <div>© 2026 <strong>Mindrazzle</strong>. Keep your mind curious.</div>
+  <div>A little challenge. A sharper mind. ✦</div>
+</footer>
+
+</div>
+
+<script>
+// DEMO PUZZLES ONLY.
+// We will replace this small test bank with the full,
+// verified collection of 365 unique daily puzzles.
+
+const puzzles = [
+  {
+    theme: "Lateral Thinking",
+    question: "A man looks at a photograph and says: \"Brothers and sisters, I have none. But this man's father is my father's son.\" Who is in the photograph?",
+    answers: ["his son", "my son", "the man's son", "his child"],
+    explanation: "Since he has no brothers, his father's son is the man himself. So the person in the photograph is his son."
+  },
+  {
+    theme: "Everyday Logic",
+    question: "What gets wetter the more it dries?",
+    answers: ["a towel", "towel"],
+    explanation: "A towel absorbs water from the things it dries, so it gets wetter while doing its job."
+  },
+  {
+    theme: "Logical Reasoning",
+    question: "Two fathers and two sons go fishing. They catch exactly three fish, and each person gets one fish. How is this possible?",
+    answers: ["there are three people", "three people", "grandfather father son", "a grandfather a father and a son"],
+    explanation: "There are three people: a grandfather, his son, and his grandson. The middle person is both a father and a son."
+  },
+  {
+    theme: "Problem Solving",
+    question: "You have three switches outside a closed room. One controls a light bulb inside. You can enter the room only once. How can you identify the correct switch?",
+    answers: ["turn one on wait turn it off turn another on then enter", "use heat", "turn one on then off and turn another on"],
+    explanation: "Turn the first switch on for a few minutes, then turn it off. Turn the second switch on and enter. If the bulb is lit, it's the second switch. If it's off but warm, it's the first. If it's off and cold, it's the third."
+  },
+  {
+    theme: "Math & Reasoning",
+    question: "If 5 machines take 5 minutes to make 5 products, how long would 100 machines take to make 100 products?",
+    answers: ["5 minutes", "five minutes"],
+    explanation: "Each machine makes one product in five minutes. So 100 machines can make 100 products in five minutes."
+  }
+];
+
+const START_DATE = "2026-11-12";
+const DAY_MS = 86400000;
+
+function getDayNumber() {
+  const start = Date.parse(START_DATE + "T00:00:00Z");
+  const now = new Date();
+  const todayUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+  return Math.max(0, Math.floor((todayUTC - start) / DAY_MS));
+}
+
+const dayNumber = getDayNumber();
+const puzzleIndex = dayNumber % puzzles.length;
+const today = puzzles[puzzleIndex];
+const todayKey = "mindrazzle-" + dayNumber;
+
+document.getElementById("theme").textContent = today.theme;
+document.getElementById("question").textContent = today.question;
+document.getElementById("puzzleNumber").textContent = "DAILY PUZZLE #" + (dayNumber + 1);
+document.getElementById("dayCount").textContent = "Day " + (dayNumber + 1);
+
+function normalize(value) {
+  return value.toLowerCase().trim().replace(/[.,!?'"“”]/g, "").replace(/\s+/g, " ");
+}
+
+function getProgress() {
+  try {
+    return JSON.parse(localStorage.getItem("mindrazzle-progress")) || {
+      solved: 0,
+      streak: 0,
+      lastSolved: null
+    };
+  } catch {
+    return { solved: 0, streak: 0, lastSolved: null };
+  }
+}
+
+let progress = getProgress();
+let alreadySolved = localStorage.getItem(todayKey) === "solved";
+
+function updateProgress() {
+  document.getElementById("streak").textContent = progress.streak;
+  document.getElementById("sideStreak").textContent = progress.streak + " days";
+  document.getElementById("solved").textContent = progress.solved;
+}
+
+function showFeedback(correct) {
+  const box = document.getElementById("feedback");
+  box.style.display = "block";
+  box.classList.toggle("wrong", !correct);
+
+  document.getElementById("feedbackTitle").textContent =
+    correct ? "✨ Brilliant! You got it!" : "Not quite! Give it another thought.";
+
+  document.getElementById("feedbackText").textContent =
+    correct
+      ? today.explanation
+      : "Try looking at the problem from another angle. You can try again!";
+}
+
+function checkAnswer() {
+  if (alreadySolved) return;
+
+  const input = normalize(document.getElementById("answer").value);
+  if (!input) {
+    document.getElementById("answer").focus();
+    return;
+  }
+
+  const correct = today.answers.some(a => normalize(a) === input);
+
+  if (correct) {
+    alreadySolved = true;
+    localStorage.setItem(todayKey, "solved");
+
+    const previous = progress.lastSolved;
+    const yesterday = "day-" + (dayNumber - 1);
+    progress.solved += 1;
+    progress.streak = previous === yesterday ? progress.streak + 1 : 1;
+    progress.lastSolved = "day-" + dayNumber;
+
+    localStorage.setItem("mindrazzle-progress", JSON.stringify(progress));
+
+    document.getElementById("answer").disabled = true;
+    document.getElementById("submitBtn").disabled = true;
+  }
+
+  showFeedback(correct);
+  updateProgress();
+}
+
+function shareResult() {
+  const result = alreadySolved ? "Solved today's Mindrazzle puzzle! ✨" : "Trying today's Mindrazzle puzzle! 🧠";
+  const text = result + "\nA little challenge. A sharper mind.\n" + window.location.href;
+
+  if (navigator.share) {
+    navigator.share({ title: "Mindrazzle", text }).catch(() => {});
+  } else if (navigator.clipboard) {
+    navigator.clipboard.writeText(text)
+      .then(() => alert("Share text copied!"))
+      .catch(() => alert(text));
+  } else {
+    alert(text);
+  }
+}
+
+if (alreadySolved) {
+  document.getElementById("answer").disabled = true;
+  document.getElementById("submitBtn").disabled = true;
+  document.getElementById("answer").placeholder = "You've solved today's puzzle!";
+  showFeedback(true);
+}
+
+updateProgress();
+</script>
+</body>
+</html>
+
