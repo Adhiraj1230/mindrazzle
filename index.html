@@ -499,65 +499,31 @@ footer strong { color: #c4b5fd; }
 </div>
 
 <script>
-// DEMO PUZZLES ONLY.
-// We will replace this small test bank with the full,
-// verified collection of 365 unique daily puzzles.
-
-const puzzles = [
-  {
-    theme: "Lateral Thinking",
-    question: "A man looks at a photograph and says: \"Brothers and sisters, I have none. But this man's father is my father's son.\" Who is in the photograph?",
-    answers: ["his son", "my son", "the man's son", "his child"],
-    explanation: "Since he has no brothers, his father's son is the man himself. So the person in the photograph is his son."
-  },
-  {
-    theme: "Everyday Logic",
-    question: "What gets wetter the more it dries?",
-    answers: ["a towel", "towel"],
-    explanation: "A towel absorbs water from the things it dries, so it gets wetter while doing its job."
-  },
-  {
-    theme: "Logical Reasoning",
-    question: "Two fathers and two sons go fishing. They catch exactly three fish, and each person gets one fish. How is this possible?",
-    answers: ["there are three people", "three people", "grandfather father son", "a grandfather a father and a son"],
-    explanation: "There are three people: a grandfather, his son, and his grandson. The middle person is both a father and a son."
-  },
-  {
-    theme: "Problem Solving",
-    question: "You have three switches outside a closed room. One controls a light bulb inside. You can enter the room only once. How can you identify the correct switch?",
-    answers: ["turn one on wait turn it off turn another on then enter", "use heat", "turn one on then off and turn another on"],
-    explanation: "Turn the first switch on for a few minutes, then turn it off. Turn the second switch on and enter. If the bulb is lit, it's the second switch. If it's off but warm, it's the first. If it's off and cold, it's the third."
-  },
-  {
-    theme: "Math & Reasoning",
-    question: "If 5 machines take 5 minutes to make 5 products, how long would 100 machines take to make 100 products?",
-    answers: ["5 minutes", "five minutes"],
-    explanation: "Each machine makes one product in five minutes. So 100 machines can make 100 products in five minutes."
-  }
-];
-
+const SUPABASE_URL = "https://fwuqwidrjdiabaaxpstn.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_PMPMB8-JwzcTKwXsZZAPhA_zPeSgLSL";
 const START_DATE = "2026-11-12";
-const DAY_MS = 86400000;
+
+let today = null;
+let dayNumber = 0;
+let todayKey = "";
+let progress = getProgress();
+let alreadySolved = false;
 
 function getDayNumber() {
   const start = Date.parse(START_DATE + "T00:00:00Z");
   const now = new Date();
-  const todayUTC = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
-  return Math.max(0, Math.floor((todayUTC - start) / DAY_MS));
+  const todayUTC = Date.UTC(
+    now.getUTCFullYear(),
+    now.getUTCMonth(),
+    now.getUTCDate()
+  );
+  return Math.max(0, Math.floor((todayUTC - start) / 86400000));
 }
 
-const dayNumber = getDayNumber();
-const puzzleIndex = dayNumber % puzzles.length;
-const today = puzzles[puzzleIndex];
-const todayKey = "mindrazzle-" + dayNumber;
-
-document.getElementById("theme").textContent = today.theme;
-document.getElementById("question").textContent = today.question;
-document.getElementById("puzzleNumber").textContent = "DAILY PUZZLE #" + (dayNumber + 1);
-document.getElementById("dayCount").textContent = "Day " + (dayNumber + 1);
-
 function normalize(value) {
-  return value.toLowerCase().trim().replace(/[.,!?'"“”]/g, "").replace(/\s+/g, " ");
+  return String(value).toLowerCase().trim()
+    .replace(/[.,!?'"“”]/g, "")
+    .replace(/\s+/g, " ");
 }
 
 function getProgress() {
@@ -572,9 +538,6 @@ function getProgress() {
   }
 }
 
-let progress = getProgress();
-let alreadySolved = localStorage.getItem(todayKey) === "solved";
-
 function updateProgress() {
   document.getElementById("streak").textContent = progress.streak;
   document.getElementById("sideStreak").textContent = progress.streak + " days";
@@ -587,24 +550,91 @@ function showFeedback(correct) {
   box.classList.toggle("wrong", !correct);
 
   document.getElementById("feedbackTitle").textContent =
-    correct ? "✨ Brilliant! You got it!" : "Not quite! Give it another thought.";
+    correct ? "✨ Brilliant! You got it!" :
+    "Not quite! Give it another thought.";
 
   document.getElementById("feedbackText").textContent =
-    correct
-      ? today.explanation
-      : "Try looking at the problem from another angle. You can try again!";
+    correct ? today.explanation :
+    "Try looking at the problem from another angle. You can try again!";
+}
+
+async function loadDailyPuzzle() {
+  const questionEl = document.getElementById("question");
+  const submitBtn = document.getElementById("submitBtn");
+
+  submitBtn.disabled = true;
+  questionEl.textContent = "Loading your daily challenge...";
+
+  dayNumber = getDayNumber();
+
+  // Select the same puzzle for everyone worldwide.
+  const puzzleId = (dayNumber % 365) + 1;
+  todayKey = "mindrazzle-" + dayNumber;
+
+  try {
+    const response = await fetch(
+      `${SUPABASE_URL}/rest/v1/puzzles?id=eq.${puzzleId}&select=id,theme,difficulty,question,answers,explanation`,
+      {
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`
+        }
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Supabase returned ${response.status}`);
+    }
+
+    const rows = await response.json();
+
+    if (!rows.length) {
+      throw new Error(`Puzzle ${puzzleId} was not found`);
+    }
+
+    today = rows[0];
+    alreadySolved = localStorage.getItem(todayKey) === "solved";
+
+    document.getElementById("theme").textContent = today.theme;
+    questionEl.textContent = today.question;
+    document.getElementById("puzzleNumber").textContent =
+      "DAILY PUZZLE #" + (dayNumber + 1);
+    document.getElementById("dayCount").textContent =
+      "Day " + (dayNumber + 1);
+
+    if (alreadySolved) {
+      document.getElementById("answer").disabled = true;
+      submitBtn.disabled = true;
+      document.getElementById("answer").placeholder =
+        "You've solved today's puzzle!";
+      showFeedback(true);
+    } else {
+      submitBtn.disabled = false;
+    }
+
+  } catch (error) {
+    console.error("Mindrazzle puzzle loading error:", error);
+    questionEl.textContent =
+      "We couldn't load today's puzzle. Please refresh the page.";
+    document.getElementById("theme").textContent = "Connection issue";
+  }
+
+  updateProgress();
 }
 
 function checkAnswer() {
-  if (alreadySolved) return;
+  if (!today || alreadySolved) return;
 
   const input = normalize(document.getElementById("answer").value);
+
   if (!input) {
     document.getElementById("answer").focus();
     return;
   }
 
-  const correct = today.answers.some(a => normalize(a) === input);
+  const correct = (today.answers || []).some(
+    answer => normalize(answer) === input
+  );
 
   if (correct) {
     alreadySolved = true;
@@ -612,11 +642,16 @@ function checkAnswer() {
 
     const previous = progress.lastSolved;
     const yesterday = "day-" + (dayNumber - 1);
+
     progress.solved += 1;
-    progress.streak = previous === yesterday ? progress.streak + 1 : 1;
+    progress.streak =
+      previous === yesterday ? progress.streak + 1 : 1;
     progress.lastSolved = "day-" + dayNumber;
 
-    localStorage.setItem("mindrazzle-progress", JSON.stringify(progress));
+    localStorage.setItem(
+      "mindrazzle-progress",
+      JSON.stringify(progress)
+    );
 
     document.getElementById("answer").disabled = true;
     document.getElementById("submitBtn").disabled = true;
@@ -627,28 +662,29 @@ function checkAnswer() {
 }
 
 function shareResult() {
-  const result = alreadySolved ? "Solved today's Mindrazzle puzzle! ✨" : "Trying today's Mindrazzle puzzle! 🧠";
-  const text = result + "\nA little challenge. A sharper mind.\n" + window.location.href;
+  const result = alreadySolved
+    ? "Solved today's Mindrazzle puzzle! ✨"
+    : "Trying today's Mindrazzle puzzle! 🧠";
+
+  const shareText =
+    result + "\nA little challenge. A sharper mind.\n" +
+    window.location.href;
 
   if (navigator.share) {
-    navigator.share({ title: "Mindrazzle", text }).catch(() => {});
+    navigator.share({
+      title: "Mindrazzle",
+      text: shareText
+    }).catch(() => {});
   } else if (navigator.clipboard) {
-    navigator.clipboard.writeText(text)
+    navigator.clipboard.writeText(shareText)
       .then(() => alert("Share text copied!"))
-      .catch(() => alert(text));
+      .catch(() => alert(shareText));
   } else {
-    alert(text);
+    alert(shareText);
   }
 }
 
-if (alreadySolved) {
-  document.getElementById("answer").disabled = true;
-  document.getElementById("submitBtn").disabled = true;
-  document.getElementById("answer").placeholder = "You've solved today's puzzle!";
-  showFeedback(true);
-}
-
-updateProgress();
+loadDailyPuzzle();
 </script>
 </body>
 </html>
