@@ -632,6 +632,11 @@ function checkAnswer() {
     return;
   }
 
+  const attemptsKey = todayKey + "-attempts";
+  let attempts = Number(localStorage.getItem(attemptsKey) || 0);
+
+  if (attempts >= 3) return;
+
   const correct = (today.answers || []).some(
     answer => normalize(answer) === input
   );
@@ -646,6 +651,7 @@ function checkAnswer() {
     progress.solved += 1;
     progress.streak =
       previous === yesterday ? progress.streak + 1 : 1;
+
     progress.lastSolved = "day-" + dayNumber;
 
     localStorage.setItem(
@@ -655,32 +661,35 @@ function checkAnswer() {
 
     document.getElementById("answer").disabled = true;
     document.getElementById("submitBtn").disabled = true;
+
+    showFeedback(true);
+    updateProgress();
+    return;
   }
 
-  showFeedback(correct);
-  updateProgress();
-}
+  attempts++;
+  localStorage.setItem(attemptsKey, attempts);
 
-function shareResult() {
-  const result = alreadySolved
-    ? "Solved today's Mindrazzle puzzle! ✨"
-    : "Trying today's Mindrazzle puzzle! 🧠";
+  if (attempts >= 3) {
+    const box = document.getElementById("feedback");
+    box.style.display = "block";
+    box.classList.remove("wrong");
 
-  const shareText =
-    result + "\nA little challenge. A sharper mind.\n" +
-    window.location.href;
+    document.getElementById("feedbackTitle").textContent =
+      "Today's answer revealed! 🧠";
 
-  if (navigator.share) {
-    navigator.share({
-      title: "Mindrazzle",
-      text: shareText
-    }).catch(() => {});
-  } else if (navigator.clipboard) {
-    navigator.clipboard.writeText(shareText)
-      .then(() => alert("Share text copied!"))
-      .catch(() => alert(shareText));
+    document.getElementById("feedbackText").textContent =
+      "Correct answer: " + today.answers[0] + ". " +
+      today.explanation;
+
+    document.getElementById("answer").disabled = true;
+    document.getElementById("submitBtn").disabled = true;
   } else {
-    alert(shareText);
+    showFeedback(false);
+
+    document.getElementById("feedbackText").textContent =
+      "Not quite! You have " + (3 - attempts) +
+      " attempts left. Think carefully!";
   }
 }
 
