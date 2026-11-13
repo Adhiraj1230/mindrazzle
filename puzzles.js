@@ -356,9 +356,9 @@ window.MINDRAZZLE_PUZZLES = [
     id: 45,
     theme: "Logic",
     difficulty: 7,
-    question: "A family has two parents and three children. Each child has one sister. How many people are in the family?",
+    question: "A family has two parents and three sons. Each son has one sister. How many people are in the family?",
     answers: ["6", "six"],
-    explanation: "The three children share one sister, meaning there are four children in total. Add two parents for six people."
+    explanation: "The three sons share one sister, meaning there are four children in total. Add two parents for six people."
   },
   {
     id: 46,
