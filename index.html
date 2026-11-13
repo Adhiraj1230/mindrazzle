@@ -516,6 +516,7 @@ const SUPABASE_ANON_KEY = "sb_publishable_PMPMB8-JwzcTKwXsZZAPhA_zPeSgLSL";
 const START_DATE = "2026-11-12";
 
 let today = null;
+const puzzleStartedAt = Date.now();
 let dayNumber = 0;
 let todayKey = "";
 let progress = getProgress();
@@ -561,15 +562,31 @@ function showFeedback(correct) {
   box.style.display = "block";
   box.classList.toggle("wrong", !correct);
 
-  document.getElementById("feedbackTitle").textContent =
-    correct ? "✨ Brilliant! You got it!" :
-    "Not quite! Give it another thought.";
+  const title = document.getElementById("feedbackTitle");
+  const message = document.getElementById("feedbackText");
 
-  document.getElementById("feedbackText").textContent =
-    correct ? today.explanation :
-    "Try looking at the problem from another angle. You can try again!";
+  if (correct) {
+    const seconds = Math.floor((Date.now() - puzzleStartedAt) / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+
+    const timeTaken = minutes > 0
+      ? `${minutes}m ${remainingSeconds}s`
+      : `${remainingSeconds}s`;
+
+    title.textContent = "🎉 Brilliant! Puzzle solved!";
+
+    message.textContent =
+      `You solved it in ${timeTaken}! ` +
+      `Your current streak is ${progress.streak} days. ` +
+      "Come back tomorrow for your next Mindrazzle challenge! " +
+      today.explanation;
+  } else {
+    title.textContent = "Not quite! Give it another thought.";
+    message.textContent =
+      "Try looking at the problem from another angle. You can try again!";
+  }
 }
-
 async function loadDailyPuzzle() {
   const questionEl = document.getElementById("question");
   const submitBtn = document.getElementById("submitBtn");
