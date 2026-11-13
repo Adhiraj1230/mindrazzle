@@ -1603,14 +1603,17 @@ window.MINDRAZZLE_PUZZLES = [
     answers: ["36", "thirty six"],
     explanation: "The digits must be 3 and 6. Reversing 36 gives 63, which is 27 larger. The original number is 36."
   },
-    {
-    id: 201,
-    theme: "Logic",
-    difficulty: 7,
-    question: "A farmer has 17 sheep. All but 9 run away. How many sheep remain?",
-    answers: ["9", "nine"],
-    explanation: "'All but 9' means 9 sheep did not run away."
-  },
+   {
+  id: 201,
+  theme: "Logic",
+  difficulty: 7,
+  question: "A basket contains 6 apples. Six people each take one apple, yet one apple remains in the basket. How is this possible?",
+  answers: [
+    "the last person takes the basket with the apple",
+    "the sixth person takes the basket"
+  ],
+  explanation: "The first five people each take one apple. The sixth person takes the basket with the final apple still inside."
+},
   {
     id: 202,
     theme: "Logic",
@@ -1876,13 +1879,17 @@ window.MINDRAZZLE_PUZZLES = [
     explanation: "He stood on a block of ice, which melted and left a puddle."
   },
   {
-    id: 235,
-    theme: "Lateral Thinking",
-    difficulty: 7,
-    question: "A man walks into a bar and asks for a glass of water. The bartender points a gun at him. The man says thank you and leaves. Why?",
-    answers: ["he had hiccups", "the bartender scared away his hiccups", "the gun startled his hiccups away"],
-    explanation: "The man had hiccups. The scare stopped them."
-  },
+  id: 235,
+  theme: "Logic",
+  difficulty: 6,
+  question: "You have two coins that add up to 30 cents. One of them is not a nickel. What are the two coins?",
+  answers: [
+    "a quarter and a nickel",
+    "25 cents and 5 cents",
+    "a 25-cent coin and a 5-cent coin"
+  ],
+  explanation: "The coins are a quarter and a nickel. One of them is not a nickel—the quarter. The other coin is a nickel."
+},
   {
     id: 236,
     theme: "Math & Reasoning",
@@ -1955,14 +1962,17 @@ window.MINDRAZZLE_PUZZLES = [
     answers: ["16", "sixteen"],
     explanation: "The total must be 4 × 12 = 48. The known numbers total 32, so the missing number is 16."
   },
-  {
-    id: 245,
-    theme: "Math & Reasoning",
-    difficulty: 7,
-    question: "A pizza is cut into 8 equal slices. You eat 3 slices. What fraction of the pizza remains?",
-    answers: ["5/8", "five eighths"],
-    explanation: "Eight slices minus three leaves five, so 5/8 remains."
-  },
+{
+  id: 245,
+  theme: "Logic",
+  difficulty: 6,
+  question: "A farmer has 15 cows. All but 8 wander away. How many cows are left?",
+  answers: [
+    "8",
+    "eight"
+  ],
+  explanation: "All but 8 means every cow except 8 wandered away, so 8 cows remain."
+},
   {
     id: 246,
     theme: "Visual Challenge",
@@ -2068,13 +2078,13 @@ window.MINDRAZZLE_PUZZLES = [
     explanation: "A coin has a head side and a tail side."
   },
   {
-    id: 259,
-    theme: "Word & Reasoning",
-    difficulty: 7,
-    question: "What word is spelled incorrectly in every dictionary?",
-    answers: ["incorrectly", "incorrect"],
-    explanation: "The word 'incorrectly' is spelled I-N-C-O-R-R-E-C-T-L-Y."
-  },
+  id: 259,
+  theme: "Word & Reasoning",
+  difficulty: 6,
+  question: "What appears once in a minute, twice in a moment, but never in a thousand years?",
+  answers: ["the letter m", "m", "letter m"],
+  explanation: "The letter M appears once in 'minute', twice in 'moment', and not at all in 'a thousand years'."
+},
   {
     id: 260,
     theme: "Word & Reasoning",
@@ -2116,13 +2126,17 @@ window.MINDRAZZLE_PUZZLES = [
     explanation: "There is one cat in each of the four corners."
   },
   {
-    id: 265,
-    theme: "Logic",
-    difficulty: 7,
-    question: "A bottle and its cap cost $1.10 together. The bottle costs $1 more than the cap. How much does the cap cost?",
-    answers: ["5 cents", "0.05", "$0.05", "five cents"],
-    explanation: "The cap costs 5 cents and the bottle costs $1.05. Together they cost $1.10."
-  },
+  id: 265,
+  theme: "Logic",
+  difficulty: 7,
+  question: "You have 3 boxes. One contains only apples, one only oranges, and one contains both. All three labels are wrong. You may take one fruit from one box. Which box should you pick to correctly identify all three boxes?",
+  answers: [
+    "the box labeled both",
+    "the box marked both",
+    "the box labeled apples and oranges"
+  ],
+  explanation: "Since every label is wrong, the box labeled BOTH cannot contain both fruits. Take one fruit from it. If you draw an apple, that box contains only apples. The remaining two boxes can then be identified because their labels are also wrong."
+},
   {
     id: 266,
     theme: "Logic",
@@ -2628,13 +2642,17 @@ window.MINDRAZZLE_PUZZLES = [
     explanation: "A map represents places and features without showing every real object."
   },
   {
-    id: 329,
-    theme: "Lateral Thinking",
-    difficulty: 7,
-    question: "A man walks into a room, sees a calendar showing Friday, and says tomorrow is Sunday. How could he be right?",
-    answers: ["the calendar is wrong", "the calendar is incorrect", "the calendar has not been updated"],
-    explanation: "The calendar may be outdated or incorrect. The question does not say it is showing the actual day."
-  },
+  id: 329,
+  theme: "Lateral Thinking",
+  difficulty: 8,
+  question: "A man says, \"The day before yesterday I was 25, and next year I will be 28.\" How is this possible?",
+  answers: [
+    "his birthday is december 31 and today is january 1",
+    "december 31 birthday",
+    "he was born on december 31"
+  ],
+  explanation: "Today is January 1. On December 30, he was 25. On December 31, he turned 26. He will turn 27 this December and 28 next December."
+},
   {
     id: 330,
     theme: "Lateral Thinking",
@@ -2811,14 +2829,14 @@ window.MINDRAZZLE_PUZZLES = [
     answers: ["bookkeeper", "bookkeeper"],
     explanation: "Bookkeeper contains oo, kk, and ee consecutively."
   },
-  {
-    id: 352,
-    theme: "Word & Reasoning",
-    difficulty: 7,
-    question: "What word contains 26 letters but has only three syllables?",
-    answers: ["alphabet", "the alphabet"],
-    explanation: "The alphabet contains 26 letters. The word 'alphabet' has three syllables."
-  },
+ {
+  id: 352,
+  theme: "Logic",
+  difficulty: 7,
+  question: "A race has 20 runners. You pass the person in second place. What position are you in now?",
+  answers: ["second", "2nd", "second place"],
+  explanation: "You take the position of the person you passed, which is second place."
+},
   {
     id: 353,
     theme: "Word & Reasoning",
@@ -2836,13 +2854,13 @@ window.MINDRAZZLE_PUZZLES = [
     explanation: "For example, the K in 'knight' is silent, and the word sounds like 'night'."
   },
   {
-    id: 355,
-    theme: "Word & Reasoning",
-    difficulty: 7,
-    question: "What word becomes a different word when you remove its first letter, and becomes another word when you remove its last letter? The original word means a place to sleep.",
-    answers: ["bed", "bedroom"],
-    explanation: "BED becomes ED when the first letter is removed, but ED is not a common standalone word. This clue needs revision before launch."
-  },
+  id: 355,
+  theme: "Word & Reasoning",
+  difficulty: 6,
+  question: "What five-letter word becomes shorter when you add two letters to it?",
+  answers: ["short", "the word short"],
+  explanation: "The word SHORT becomes SHORTER when you add the letters E and R."
+},
   {
     id: 356,
     theme: "Word & Reasoning",
@@ -2884,13 +2902,13 @@ window.MINDRAZZLE_PUZZLES = [
     explanation: "In suitable block lettering, NOON can look the same when rotated 180 degrees and is also a palindrome."
   },
   {
-    id: 361,
-    theme: "Word & Reasoning",
-    difficulty: 7,
-    question: "What word has five letters, sounds like one letter, and is used to ask a question?",
-    answers: ["why"],
-    explanation: "The word 'why' sounds like the letter Y, but this clue has only three letters, not five."
-  },
+  id: 361,
+  theme: "Word & Reasoning",
+  difficulty: 7,
+  question: "What three-letter word sounds like one letter and is used to ask a question?",
+  answers: ["why"],
+  explanation: "The word WHY sounds like the letter Y, and we use it to ask questions."
+},
   {
     id: 362,
     theme: "Word & Reasoning",
@@ -2908,19 +2926,19 @@ window.MINDRAZZLE_PUZZLES = [
     explanation: "Remove the S from STONE and you get ONE."
   },
   {
-    id: 364,
-    theme: "Word & Reasoning",
-    difficulty: 7,
-    question: "What word has 3 letters, starts with G, ends with G, and means a place where a ship is kept?",
-    answers: ["gag", "gig"],
-    explanation: "This clue is not reliable as written and should be replaced before launch."
-  },
-  {
-    id: 365,
-    theme: "Word & Reasoning",
-    difficulty: 7,
-    question: "What word can you take away from the front of a word and leave the same word behind?",
-    answers: ["queue"],
-    explanation: "QUEUE is pronounced like the letter Q. Removing the first four letters leaves U-E-U-E, which sounds like the same letter name only in the original word's pronunciation."
-  }
+  id: 364,
+  theme: "Word & Reasoning",
+  difficulty: 6,
+  question: "What has a head and a tail but no body?",
+  answers: ["a coin", "coin"],
+  explanation: "A coin has a head side and a tail side, but no body."
+},
+{
+  id: 365,
+  theme: "Word & Reasoning",
+  difficulty: 6,
+  question: "What word is still pronounced the same way after you remove four of its five letters?",
+  answers: ["queue"],
+  explanation: "QUEUE is pronounced like the letter Q. Remove the four letters U, E, U, and E, and only Q remains, which is pronounced the same way."
+ },
 ];
