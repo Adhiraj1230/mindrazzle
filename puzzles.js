@@ -399,10 +399,9 @@ window.MINDRAZZLE_PUZZLES = [
     question: "You have 9 identical-looking coins. One is lighter than the others. Using a balance scale only twice, how can you find it?",
     answers: ["weigh groups of three then weigh two from the lighter group", "divide into three groups of three"],
     explanation: "Divide the coins into three groups of three. Weigh one group against another. If they balance, the lighter coin is in the third group. Otherwise, it is in the lighter group. Then weigh two coins from that group against each other. If they balance, the third is lighter; otherwise, the lighter side identifies it."
-  }
-];
-
+    },
   {
+    id: 51,
     id: 51,
     theme: "Pattern Recognition",
     difficulty: 7,
