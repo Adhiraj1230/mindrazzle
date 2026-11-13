@@ -553,7 +553,8 @@ function getProgress() {
 
 function updateProgress() {
   document.getElementById("streak").textContent = progress.streak;
-  document.getElementById("sideStreak").textContent = progress.streak + " days";
+  document.getElementById("sideStreak").textContent =
+  progress.streak + (progress.streak === 1 ? " day" : " days");
   document.getElementById("solved").textContent = progress.solved;
 }
 
