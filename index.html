@@ -597,7 +597,7 @@ function showFeedback(correct) {
     : `${remainingSeconds}s`;
 
   const message = alreadySolved
-    ? `🧠 I solved today's Mindrazzle in ${timeTaken}!\n🔥 My streak: ${progress.streak} day(s).\n\nCan you beat me?\n${window.location.href}`
+    ? `🧠 I solved today's Mindrazzle in ${timeTaken}!\n🔥 My streak: ${progress.streak} ${progress.streak === 1 ? "day" : "days"}.\n\nCan you beat me?\n${window.location.href}`
     : `🧠 Try today's Mindrazzle puzzle!\nCan you solve it?\n${window.location.href}`;
 
   if (navigator.share) {
