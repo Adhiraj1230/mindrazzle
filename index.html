@@ -587,6 +587,39 @@ function showFeedback(correct) {
       "Try looking at the problem from another angle. You can try again!";
   }
 }
+  async function shareResult() {
+  const seconds = Math.floor((Date.now() - puzzleStartedAt) / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+
+  const timeTaken = minutes > 0
+    ? `${minutes}m ${remainingSeconds}s`
+    : `${remainingSeconds}s`;
+
+  const message = alreadySolved
+    ? `🧠 I solved today's Mindrazzle in ${timeTaken}!\n🔥 My streak: ${progress.streak} day(s).\n\nCan you beat me?\n${window.location.href}`
+    : `🧠 Try today's Mindrazzle puzzle!\nCan you solve it?\n${window.location.href}`;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: "Mindrazzle",
+        text: message
+      });
+    } catch (error) {
+      if (error.name !== "AbortError") {
+        alert("Unable to share right now.");
+      }
+    }
+  } else {
+    try {
+      await navigator.clipboard.writeText(message);
+      alert("Your Mindrazzle result has been copied!");
+    } catch (error) {
+      alert("Unable to share. Please try again.");
+    }
+  }
+}
 async function loadDailyPuzzle() {
   const questionEl = document.getElementById("question");
   const submitBtn = document.getElementById("submitBtn");
