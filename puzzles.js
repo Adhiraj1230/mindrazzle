@@ -2829,13 +2829,13 @@ window.MINDRAZZLE_PUZZLES = [
     answers: ["bookkeeper", "bookkeeper"],
     explanation: "Bookkeeper contains oo, kk, and ee consecutively."
   },
- {
+{
   id: 352,
   theme: "Logic",
-  difficulty: 7,
-  question: "A race has 20 runners. You pass the person in second place. What position are you in now?",
-  answers: ["second", "2nd", "second place"],
-  explanation: "You take the position of the person you passed, which is second place."
+  difficulty: 6,
+  question: "A farmer has 12 chickens. All but 5 escape from the coop. How many chickens remain?",
+  answers: ["5", "five"],
+  explanation: "All but 5 means every chicken except 5 escaped. So 5 chickens remain."
 },
   {
     id: 353,
@@ -2853,13 +2853,13 @@ window.MINDRAZZLE_PUZZLES = [
     answers: ["knight", "write", "wrong", "wrist"],
     explanation: "For example, the K in 'knight' is silent, and the word sounds like 'night'."
   },
-  {
+ {
   id: 355,
   theme: "Word & Reasoning",
   difficulty: 6,
-  question: "What five-letter word becomes shorter when you add two letters to it?",
-  answers: ["short", "the word short"],
-  explanation: "The word SHORT becomes SHORTER when you add the letters E and R."
+  question: "What can travel around the world while staying in one corner?",
+  answers: ["A stamp", "stamp", "postage stamp"],
+  explanation: "A postage stamp stays in the corner of an envelope while the envelope travels around the world."
 },
   {
     id: 356,
@@ -2925,13 +2925,13 @@ window.MINDRAZZLE_PUZZLES = [
     answers: ["stone", "one"],
     explanation: "Remove the S from STONE and you get ONE."
   },
-  {
+ {
   id: 364,
   theme: "Word & Reasoning",
-  difficulty: 6,
-  question: "What has a head and a tail but no body?",
-  answers: ["a coin", "coin"],
-  explanation: "A coin has a head side and a tail side, but no body."
+  difficulty: 5,
+  question: "What has a neck but no head?",
+  answers: ["A bottle", "bottle"],
+  explanation: "A bottle has a neck, but it does not have a head."
 },
 {
   id: 365,
