@@ -578,7 +578,7 @@ function showFeedback(correct) {
 
     message.textContent =
       `You solved it in ${timeTaken}! ` +
-      `Your current streak is ${progress.streak} days. ` +
+      `Your current streak is ${progress.streak} ${progress.streak === 1 ? "day" : "days"}. ` +
       "Come back tomorrow for your next Mindrazzle challenge! " +
       today.explanation;
   } else {
